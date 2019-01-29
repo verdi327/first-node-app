@@ -3,6 +3,7 @@ const fs = require("fs");
 const hbs = require("hbs");
 const app = express();
 app.set("view engine", "hbs")
+const port = process.env.PORT || 3000
 
 hbs.registerPartials(__dirname + "/views/partials")
 hbs.registerHelper("getCurrentYear", () => {
@@ -25,9 +26,9 @@ app.use((req, res, next) => {
 
 // create our own middleware which prevents any page from being seen
 // except for our maintenance page
-app.use((req, res, next)=> {
-	res.render("maintenance.hbs")
-})
+// app.use((req, res, next)=> {
+// 	res.render("maintenance.hbs")
+// })
 
 // use a static directory middlewar. Don't need to explicitly declare
 // routes.  Url gets mapped to the public dir and a filename matching the 
@@ -53,4 +54,6 @@ app.get("/bad", (req,res) => {
 	})
 })
 
-app.listen(3000)
+app.listen(port, () => {
+	console.log(`Server up and running on port ${port}`)
+})
